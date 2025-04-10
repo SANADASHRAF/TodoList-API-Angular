@@ -31,12 +31,17 @@ export class ApiService {
   }
   
 
-  register(userName: string, email: string, password: string): Observable<ApiResponse<User>> {
-    return this.http.post<ApiResponse<User>>(`${this.baseUrl}/Authentication/Register`, { userName, email, password });
+  // register(Username: string, Email : string, Password : string): Observable<ApiResponse<User>> {
+  //   return this.http.post<ApiResponse<User>>(`${this.baseUrl}/Authentication/register`, { Username, Email , Password  });
+  // }
+
+  register(Username: string, Email: string, Password: string): Observable<ApiResponse<User>> {
+    const formData = new FormData();
+    formData.append('Username', Username);
+    formData.append('Email', Email);
+    formData.append('Password', Password);
+    return this.http.post<ApiResponse<User>>(`${this.baseUrl}/Authentication/register`, formData);
   }
-
-  
-
 
   getAllTaskPriorities(): Observable<ApiResponse<Priority[]>> {
     return this.http.get<ApiResponse<Priority[]>>(`${this.baseUrl}/Static/GetAllTaskPriorities`, { headers: this.getHeaders() });
@@ -82,14 +87,19 @@ export class ApiService {
   }
 
 
-  getTasksByFilter(userId: number, statusId?: number, categoryId?: number, priorityId?: number): Observable<ApiResponse<Task[]>> {
+  getTasksByFilter(
+    userId: number,
+    statusId?: number,
+    categoryId?: number,
+    priorityId?: number
+  ): Observable<ApiResponse<any>> {
     let url = `${this.baseUrl}/Task/GetTasksByFilter?userId=${userId}`;
-    if (statusId) url += `&statusId=${statusId}`;
-    if (categoryId) url += `&categoryId=${categoryId}`;
-    if (priorityId) url += `&priorityId=${priorityId}`;
-    return this.http.get<ApiResponse<Task[]>>(url, { headers: this.getHeaders() });
+    if (statusId !== undefined) url += `&statusId=${statusId}`;
+    if (categoryId !== undefined) url += `&categoryId=${categoryId}`;
+    if (priorityId !== undefined) url += `&priorityId=${priorityId}`;
+    return this.http.get<ApiResponse<any>>(url, { headers: this.getHeaders() });
   }
-
+  
   getTaskStatistics(userId: number): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(`${this.baseUrl}/Task/GetTaskStatistics?userId=${userId}`, { headers: this.getHeaders() });
   }

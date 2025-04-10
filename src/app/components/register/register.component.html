@@ -1,1 +1,21 @@
-<p>register works!</p>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <form class="w-100" style="max-width: 400px;" (ngSubmit)="register()">
+    <h2 class="text-center mb-4">إنشاء حساب</h2>
+    <div class="text-center mb-3" [ngClass]="{'text-success': message.includes('نجاح'), 'text-danger': !message.includes('نجاح') && message}">
+      {{ message }}
+    </div>
+    <div class="form-group mb-3">
+      <label for="Username">اسم المستخدم</label>
+      <input type="text" class="form-control" id="Username" [(ngModel)]="Username" name="Username" placeholder="اسم المستخدم">
+    </div>
+    <div class="form-group mb-3">
+      <label for="Email">البريد الإلكتروني</label>
+      <input type="email" class="form-control" id="Email" [(ngModel)]="Email" name="Email" placeholder="البريد الإلكتروني">
+    </div>
+    <div class="form-group mb-3">
+      <label for="Password">كلمة المرور</label>
+      <input type="password" class="form-control" id="Password" [(ngModel)]="Password" name="Password" placeholder="كلمة المرور">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">تسجيل</button>
+  </form>
+</div>

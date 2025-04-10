@@ -1,30 +1,20 @@
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
-  <form class="w-100" style="max-width: 400px;">
+  <form class="w-100" style="max-width: 400px;" (ngSubmit)="login()">
     <h2 class="text-center mb-4">تسجيل الدخول</h2>
-
-    <!-- Message display -->
     <div class="text-center mb-3" [ngClass]="{'text-success': message.includes('نجاح'), 'text-danger': !message.includes('نجاح') && message}">
       {{ message }}
     </div>
-
-    <!-- Email input -->
-    <div data-mdb-input-init class="form-outline mb-4">
+    <div class="form-outline mb-4">
       <input type="email" [(ngModel)]="email" name="email" class="form-control" id="form2Example1" />
       <label class="form-label" for="form2Example1">البريد الإلكتروني</label>
     </div>
-
-    <!-- Password input -->
-    <div data-mdb-input-init class="form-outline mb-4">
+    <div class="form-outline mb-4">
       <input type="password" [(ngModel)]="password" name="password" class="form-control" id="form2Example2" />
       <label class="form-label" for="form2Example2">كلمة المرور</label>
     </div>
-
-    <!-- Submit button -->
-    <button type="button" (click)="login()" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">دخول</button>
-
-    <!-- Register link -->
+    <button type="submit" class="btn btn-primary btn-block mb-4">دخول</button>
     <div class="text-center">
-      <p>ليس لديك حساب؟ <a href="/register">سجل الآن</a></p>
+      <p>ليس لديك حساب؟ <a (click)="goToRegister()">سجل الآن</a></p>
     </div>
   </form>
 </div>

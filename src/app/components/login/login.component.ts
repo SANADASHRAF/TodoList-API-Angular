@@ -15,24 +15,40 @@ import { ApiResponse } from '../../models/response.model';
 export class LoginComponent {
   email: string = '';
   password: string = '';
-  message: string = ''; // متغير جديد لتخزين الـ message
+  message: string = '';
 
   constructor(private apiService: ApiService, private router: Router) {}
 
+  // login() {
+  //   this.message = '';
+  //   this.apiService.login(this.email, this.password).subscribe({
+  //     next: (response: ApiResponse<any>) => {
+  //       this.message = response.message;
+  //       if (response.success) {
+  //         localStorage.setItem('token', response.data.token);
+  //         this.router.navigate(['/tasks']);
+  //       }
+  //     },
+  //     error: (err) => this.message = err.status === 400 ? 'بيانات غير صحيحة' : 'خطأ فى تسجيل الدخول'
+  //   });
+  // }
+  
   login() {
-    this.message = ''; // ريست الرسالة قبل الطلب
+    this.message = '';
     this.apiService.login(this.email, this.password).subscribe({
       next: (response: ApiResponse<any>) => {
-        this.message = response.message; // خزن الـ message سواء نجاح أو فشل
+        this.message = response.message;
         if (response.success) {
           localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userId', response.data.userId || '1'); // افترض إن الـ API بيرجع userId
           this.router.navigate(['/tasks']);
         }
       },
-      error: (err: any) => {
-        console.log('Login Error:', err);
-        this.message = err.status === 400 ? 'البريد الإلكتروني أو كلمة المرور غير صحيحة' : 'حصل خطأ أثناء تسجيل الدخول';
-      }
+      error: (err) => this.message = err.status === 400 ? 'بيانات غير صحيحة' : 'خطأ فى تسجيل الدخول'
     });
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']); 
   }
 }
